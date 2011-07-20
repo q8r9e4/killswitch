@@ -4,6 +4,8 @@
  */
 package net.killswitch;
 
+import java.util.Vector;
+
 /**
  *
  * @author q8r9e4
@@ -15,7 +17,7 @@ public class Killswitch {
 	 */
 	
 	public static void main(String[] args) {
-		killswitch ks = new killswitch();
+		Killswitch ks = new Killswitch();
 		ks.run();
 
 		}
