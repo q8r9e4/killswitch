@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package net.killswitch;
 
 import java.util.Vector;
@@ -17,20 +13,28 @@ public class Killswitch {
 	 */
 	
 	public static void main(String[] args) {
-		Killswitch ks = new Killswitch();
-		ks.run();
-
-		}
+            String[] RSAargs = new String[3];
+            RSAargs[0]="256";
+            
+            RSA key = new RSA(256);
+            
+            RSA.main(RSAargs);
+            
+//		Killswitch ks = new Killswitch();
+//		ks.run();
+	}
+        
 	public void run(){
 		this.staticHosts.add("http://google.com");
 		this.staticHosts.add("http://en.wikipedia.org");
 		
+                
+                //start local server
 		Vector<String> FoundHosts = new Vector<String>();
 		for (String host:this.staticHosts){
 			//Try to connect (to lazy to write that now)
 			//if found
 				//FoundHosts.add(host);
-			
 			System.out.println(host);
 		}
 		
