@@ -33,6 +33,12 @@ public class Killswitch {
      * @param args
      */
     public static void main(String[] args) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, UnsupportedEncodingException, IllegalBlockSizeException, BadPaddingException, IOException, NoSuchProviderException, ShortBufferException {
+        /*
+         * please god, hear my prayer
+         * I will never ask you for anything anymore
+         * if you let run this programm correctly
+         */
+        
         String test2 = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 
         boolean server = false;
@@ -43,58 +49,34 @@ public class Killswitch {
         }
         
         if (server){
-            crypt test = new crypt();
-            byte[] encrypt = test.encrypt("teeeeest :>");
+            //starting test server
             ServerSocket serverSocket = new ServerSocket(1337);
             System.out.println("started server");
-            byte[] Key = test.key;
-            System.out.println(Key.toString());
-            int lengthRoot = test.lengthRoot;
-            System.out.println(lengthRoot);
-            int lengthPriv = test.lengthPriv;
-            System.out.println(lengthPriv);
             Socket socket = serverSocket.accept();
             System.out.println("Connect! "+socket.toString());
             DataInputStream inpStream = new DataInputStream(socket.getInputStream());
             DataOutputStream outStream = new DataOutputStream(socket.getOutputStream());
+
             
-            String getKey = inpStream.readUTF();
-            if (getKey.equals("me wantz encrypted!")){
-                outStream.write(Key);
-                outStream.writeInt(lengthRoot);
-                outStream.writeInt(lengthPriv);
-                outStream.write(encrypt);
-            }
+            NetworkHelper helper = new NetworkHelper();
             
+            //once the network is set up, this is the only function to send data over the wire
+            helper.sendEnc(outStream, "asd");
         } else {
             Socket socket = new Socket("localhost", 1337);
             DataInputStream inpStream = new DataInputStream(socket.getInputStream());
             DataOutputStream outStream = new DataOutputStream(socket.getOutputStream());
             
-            outStream.writeUTF("me wantz encrypted!");
+            NetworkHelper helper = new NetworkHelper();
             
-            byte[] key = new byte[24];
-            inpStream.read(key);
-            int LengthRoot = inpStream.readInt();
-            int LengthPriv = inpStream.readInt();
-            byte[] encrypt = new byte[LengthRoot];
-            inpStream.read(encrypt);
-            
-             crypt testNewCrypt = new crypt(key);
+            //same here, only func to read, once its set up
+            System.out.println(helper.readEnc(inpStream));
 
-            byte[] decrypt = testNewCrypt.decrypt(encrypt, LengthRoot, LengthPriv);
-            //test.decrypt(encrypt,test.lengthRoot,test.lengthPriv);
-            System.out.println("decrypt: " + new String(decrypt));
         }
-//        crypt test = new crypt();
-//        byte[] encrypt = test.encrypt(test2);
-//        System.out.println("encrypt: "+new String(encrypt));
-//        
-//        //send test.lengthRoot,test.lengthPriv and test.key
-//        crypt testNewCrypt = new crypt(test.key);
-//        byte[] decrypt =  testNewCrypt.decrypt(encrypt,test.lengthRoot,test.lengthPriv);
-//        //test.decrypt(encrypt,test.lengthRoot,test.lengthPriv);
-//        System.out.println("decrypt: "+new String(decrypt));
+        
+        /*
+         * Thank you God
+         */
 
     }
 
